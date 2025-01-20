@@ -1,0 +1,13 @@
+class Solution:
+    def subarraySum(self, nums, k):
+        prefixSumFreq = {0: 1}
+        prefixSum = 0
+        count = 0
+        
+        for num in nums:
+            prefixSum += num
+            if prefixSum - k in prefixSumFreq:
+                count += prefixSumFreq[prefixSum - k]
+            prefixSumFreq[prefixSum] = prefixSumFreq.get(prefixSum, 0) + 1
+        
+        return count
