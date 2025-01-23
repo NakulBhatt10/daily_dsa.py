@@ -1,0 +1,14 @@
+class Solution:
+    def isPalindrome(self, s):
+        def helper(left, right):
+            while left < right and not s[left].isalnum():
+                left += 1
+            while left < right and not s[right].isalnum():
+                right -= 1
+            if left >= right:
+                return True
+            if s[left].lower() != s[right].lower():
+                return False
+            return helper(left + 1, right - 1)
+        
+        return helper(0, len(s) - 1)
