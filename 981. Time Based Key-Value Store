@@ -1,0 +1,20 @@
+import bisect
+
+class TimeMap:
+    def __init__(self):
+        self.store = {}  # key -> {'timestamps': [], 'values': []}
+
+    def set(self, key, value, timestamp):
+        if key not in self.store:
+            self.store[key] = {'timestamps': [], 'values': []}
+        self.store[key]['timestamps'].append(timestamp)
+        self.store[key]['values'].append(value)
+
+    def get(self, key, timestamp):
+        if key not in self.store:
+            return ""
+        timestamps = self.store[key]['timestamps']
+        i = bisect.bisect_right(timestamps, timestamp)
+        if i == 0:
+            return ""
+        return self.store[key]['values'][i-1]
