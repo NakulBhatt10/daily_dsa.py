@@ -1,0 +1,20 @@
+class Solution:
+    def splitArray(self, nums, k):
+        def can_split(mid):
+            count = 1
+            total = 0
+            for num in nums:
+                total += num
+                if total > mid:
+                    count += 1
+                    total = num
+            return count <= k
+
+        left, right = max(nums), sum(nums)
+        while left < right:
+            mid = (left + right) // 2
+            if can_split(mid):
+                right = mid
+            else:
+                left = mid + 1
+        return left
