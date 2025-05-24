@@ -1,0 +1,35 @@
+
+class Solution:
+    def reverseKGroup(self, head, k):
+        # Check if there are at least k nodes remaining
+        def hasKNodes(node, k):
+            count = 0
+            while node and count < k:
+                node = node.next
+                count += 1
+            return count == k
+
+        # Reverse k nodes and return new head, tail, and next start
+        def reverseKNodes(head, k):
+            prev = None
+            curr = head
+            for _ in range(k):
+                nxt = curr.next
+                curr.next = prev
+                prev = curr
+                curr = nxt
+            return prev, head, curr
+
+        dummy = ListNode(0)
+        dummy.next = head
+        prev_tail = dummy
+        curr = head
+
+        while hasKNodes(curr, k):
+            new_head, new_tail, next_group = reverseKNodes(curr, k)
+            prev_tail.next = new_head
+            new_tail.next = next_group
+            prev_tail = new_tail
+            curr = next_group
+
+        return dummy.next
