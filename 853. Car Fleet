@@ -1,0 +1,14 @@
+class Solution(object):
+    def carFleet(self, target, position, speed):
+        # Pair positions and speeds, then sort by position descending
+        cars = sorted(zip(position, speed), reverse=True)
+        
+        # Stack to store fleet arrival times
+        stack = []
+        
+        for pos, spd in cars:
+            time = float(target - pos) / spd
+            if not stack or time > stack[-1]:
+                stack.append(time)
+        
+        return len(stack)
