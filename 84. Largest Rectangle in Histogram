@@ -1,0 +1,26 @@
+class Solution:
+    def largestRectangleArea(self, heights):
+        stack = []
+        max_area = 0
+        i = 0
+        while i < len(heights):
+            if not stack or heights[i] >= heights[stack[-1]]:
+                stack.append(i)
+                i += 1
+            else:
+                top = stack.pop()
+                if not stack:
+                    area = heights[top] * i
+                else:
+                    area = heights[top] * (i - stack[-1] - 1)
+                if area > max_area:
+                    max_area = area
+        while stack:
+            top = stack.pop()
+            if not stack:
+                area = heights[top] * i
+            else:
+                area = heights[top] * (i - stack[-1] - 1)
+            if area > max_area:
+                max_area = area
+        return max_area
