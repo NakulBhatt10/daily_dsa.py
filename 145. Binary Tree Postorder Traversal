@@ -1,0 +1,17 @@
+class Solution(object):
+    def postorderTraversal(self, root):
+        result = []
+        stack = []
+        last = None
+        while root or stack:
+            if root:
+                stack.append(root)
+                root = root.left
+            else:
+                peek = stack[-1]
+                if peek.right and last != peek.right:
+                    root = peek.right
+                else:
+                    result.append(peek.val)
+                    last = stack.pop()
+        return result
